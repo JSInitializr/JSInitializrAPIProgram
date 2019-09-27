@@ -6,7 +6,6 @@ var path = require('path');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log('here it is')
   var projectListPath = __dirname + './../public/';
   fs.readdir(projectListPath, (error, list) => {
     if(error) {
@@ -16,7 +15,7 @@ router.get('/', function(req, res, next) {
     } 
     res.zip({
       files: [{
-        content: 'this is a string',      //options can refer to [http://archiverjs.com/zip-stream/ZipStream.html#entry](http://archiverjs.com/zip-stream/ZipStream.html#entry)
+        content: 'this is a string',      
         name: 'file-name',
         mode: 0755,
         comment: 'comment-for-the-file',
