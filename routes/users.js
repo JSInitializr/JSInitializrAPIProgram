@@ -6,11 +6,10 @@ var path = require('path');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log('here it is')
   var projectListPath = __dirname + './../public/';
-  fs.readdir(projectListPath, (error, list) => {
+  fs.readdir(path.resolve(projectListPath), (error, list) => {
     if(error) {
-      console.log(error);
+      console.log('filepath', error);
       res.send(error);
       return;
     } 
