@@ -107,11 +107,12 @@ const copyFolder = (source, destination, callback) => {
     ncp(source, destination, function (err) {
         if (err) {
             console.log("error in copy files");
-            return console.error(err);
-
+            console.error(err);
         }
         console.log('done!');
+        callback(err);
     });
+    
 }
 
 const createZip = (folderPath,response) => {
