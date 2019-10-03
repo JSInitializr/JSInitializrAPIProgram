@@ -16,7 +16,7 @@ exports.create = function (request, response, next) {
                 return err;
             }
             const packageJsonFilePath = path.join(destinationFolderPath, 'package.json')
-            saveToPackage(packageJsonFilePath,'dependency',params.dependenciesItem);
+            saveToPackage(packageJsonFilePath,'dependency',{hello:'world'});
             return createZip(destinationFolderPath,response);
         });
 
