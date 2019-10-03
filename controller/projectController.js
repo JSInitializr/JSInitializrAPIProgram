@@ -100,8 +100,8 @@ const getDestinationFolderPath = () => {
 
 const copyFolder = (source, destination, callback) => {
     console.log("*****************")
-    console.log(sourceFolderPath);
-    console.log(destinationFolderPath);
+    console.log(source);
+    console.log(destination);
     ncp.limit = 16;
 
     ncp(source, destination, function (err) {
