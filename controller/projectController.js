@@ -30,6 +30,9 @@ exports.create = function (request, response, next) {
 
 function saveToPackage(packageJsonFilePath, category, requestedData) {
 
+    console.log("save to package json file pth");
+    console.log(packageJsonFilePath);
+
     const data = readFromFile(packageJsonFilePath);
     let json;
 
@@ -96,14 +99,18 @@ const getDestinationFolderPath = () => {
 }
 
 const copyFolder = (source, destination, callback) => {
+    console.log("*****************")
+    console.log(sourceFolderPath);
+    console.log(destinationFolderPath);
     ncp.limit = 16;
 
     ncp(source, destination, function (err) {
         if (err) {
+            console.log("error in copy files");
             return console.error(err);
+
         }
         console.log('done!');
-        callback(err);
     });
 }
 
