@@ -86,7 +86,7 @@ const getSourceFolderPath = (params) => {
         return item.label === 'Technology';
     });
 
-    const folderName = language.value + '_' + technology.value;
+    const folderName = language.value + 'X' + technology.value;
     var projectDirPath = path.resolve(__dirname + './../public/');
 
     const folderSourcePath = path.join(projectDirPath, folderName)
@@ -95,7 +95,7 @@ const getSourceFolderPath = (params) => {
 
 
 const getDestinationFolderPath = () => {
-    return path.resolve(__dirname + './../public/TempFolder');
+    return path.resolve(__dirname + './../public/TempXFolder');
 }
 
 const copyFolder = (source, destination, callback) => {
