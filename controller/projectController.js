@@ -61,8 +61,8 @@ function saveToPackage(packageJsonFilePath, category, requestedData) {
 
 function readFromFile(filePath) {
     console.log(filePath);
-    const readFileData = fs.readFileSync(filePath);
-    return readFileData.toString();
+    const readFileData = require(filePath);
+    return JSON.stringify(readFileData);
 }
 
 function writeToFile(filePath, fileContent) {
