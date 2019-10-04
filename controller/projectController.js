@@ -36,23 +36,25 @@ function saveToPackage(packageJsonFilePath, category, requestedData) {
     const data = readFromFile(packageJsonFilePath);
     let json;
 
-    try {
-        json = JSON.parse(data);
-    } catch (e) {
-        console.error('Could not parse package.json. Stop.');
-    }
+    // try {
+    //     console.log("data **************",data);
+    //     json = JSON.parse(data);
+    //     console.log(json);
+    // } catch (e) {
+    //     console.error('Could not parse package.json. Stop.');
+    // }
 
-    let modifiedJsonData = Object.assign(json[getTargetName(category)] || {}, requestedData)
+    // let modifiedJsonData = Object.assign(json[getTargetName(category)] || {}, requestedData)
 
-    modifiedJsonData = Object.keys(modifiedJsonData).sort().reduce((res, key) => {
-        res[key] = modifiedJsonData[key];
-        return res;
-    }, {});
+    // modifiedJsonData = Object.keys(modifiedJsonData).sort().reduce((res, key) => {
+    //     res[key] = modifiedJsonData[key];
+    //     return res;
+    // }, {});
 
-    json[getTargetName(category)] = modifiedJsonData;
+    // json[getTargetName(category)] = modifiedJsonData;
 
-    writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
-    console.log('Done.');
+    // writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
+    // console.log('Done.');
 }
 
 
@@ -100,8 +102,6 @@ const getDestinationFolderPath = () => {
 
 const copyFolder = (source, destination, callback) => {
     console.log("*****************")
-    console.log(source);
-    console.log(destination);
     ncp.limit = 16;
 
     ncp(source, destination, function (err) {
