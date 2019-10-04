@@ -36,30 +36,31 @@ function saveToPackage(packageJsonFilePath, category, requestedData) {
     const data = readFromFile(packageJsonFilePath);
     let json;
 
-    // try {
-    //     console.log("data **************",data);
-    //     json = JSON.parse(data);
-    //     console.log(json);
-    // } catch (e) {
-    //     console.error('Could not parse package.json. Stop.');
-    // }
+    try {
+        console.log("data **************",data);
+        json = JSON.parse(data);
+        console.log(json);
+    } catch (e) {
+        console.error('Could not parse package.json. Stop.');
+    }
 
-    // let modifiedJsonData = Object.assign(json[getTargetName(category)] || {}, requestedData)
+    let modifiedJsonData = Object.assign(json[getTargetName(category)] || {}, requestedData)
 
-    // modifiedJsonData = Object.keys(modifiedJsonData).sort().reduce((res, key) => {
-    //     res[key] = modifiedJsonData[key];
-    //     return res;
-    // }, {});
+    modifiedJsonData = Object.keys(modifiedJsonData).sort().reduce((res, key) => {
+        res[key] = modifiedJsonData[key];
+        return res;
+    }, {});
 
-    // json[getTargetName(category)] = modifiedJsonData;
+    json[getTargetName(category)] = modifiedJsonData;
 
-    // writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
-    // console.log('Done.');
+    writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
+    console.log('Done.');
 }
 
 
 
 function readFromFile(filePath) {
+    console.log(filePath);
     const readFileData = fs.readFileSync(filePath);
     return readFileData.toString();
 }
@@ -87,6 +88,8 @@ const getSourceFolderPath = (params) => {
     const technology = params.tabs.find(item => {
         return item.label === 'Technology';
     });
+    console.log("Requested params")
+    console.log(params);
 
     const folderName = language.value + 'X' + technology.value;
     var projectDirPath = path.resolve(__dirname + './../public/');
@@ -116,6 +119,7 @@ const copyFolder = (source, destination, callback) => {
 }
 
 const createZip = (folderPath,response) => {
+    console.log("create zip folder path",folderPath);
         return response.zip({
             files: [{
                 content: 'this is a string',
