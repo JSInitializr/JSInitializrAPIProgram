@@ -8,6 +8,8 @@ var ncp = require('ncp').ncp;
 exports.create = function (request, response, next) {
     try {
         var params = request.body;
+        console.log("*********************")
+        console.log(params);
         const sourceFolderPath = getSourceFolderPath(params);
         const destinationFolderPath = getDestinationFolderPath();
 
@@ -16,7 +18,7 @@ exports.create = function (request, response, next) {
                 return err;
             }
             const packageJsonFilePath = path.join(destinationFolderPath, 'package.json')
-            saveToPackage(packageJsonFilePath,'dependency',{hello:'world'});
+            saveToPackage(packageJsonFilePath,params);
             return createZip(destinationFolderPath,response);
         });
 
@@ -28,7 +30,7 @@ exports.create = function (request, response, next) {
 }
 
 
-function saveToPackage(packageJsonFilePath, category, requestedData) {
+function saveToPackage(packageJsonFilePath, params) {
 
     console.log("save to package json file pth");
     console.log(packageJsonFilePath);
@@ -44,15 +46,15 @@ function saveToPackage(packageJsonFilePath, category, requestedData) {
         console.error('Could not parse package.json. Stop.');
     }
 
-    let modifiedJsonData = Object.assign(json[getTargetName(category)] || {}, requestedData)
+    let modifiedJsonData = Object.assign(json['dependencies'] || {}, params.dependency)
 
     modifiedJsonData = Object.keys(modifiedJsonData).sort().reduce((res, key) => {
         res[key] = modifiedJsonData[key];
         return res;
     }, {});
 
-    json[getTargetName(category)] = modifiedJsonData;
-
+    json['dependencies'] = modifiedJsonData;
+    json = Object.assign(json,params.metaDataItems);
     writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
     console.log('Done.');
 }
@@ -82,16 +84,10 @@ function getTargetName(target) {
 
 const getSourceFolderPath = (params) => {
 
-    const language = params.tabs.find(item => {
-        return item.label === 'Language';
-    })
-    const technology = params.tabs.find(item => {
-        return item.label === 'Technology';
-    });
     console.log("Requested params")
     console.log(params);
-
-    const folderName = language.value + 'X' + technology.value;
+    
+    const folderName = params.Language + 'X' + params.Technology;
     var projectDirPath = path.resolve(__dirname + './../public/');
 
     const folderSourcePath = path.join(projectDirPath, folderName)
