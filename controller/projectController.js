@@ -87,7 +87,7 @@ const getSourceFolderPath = (params) => {
     console.log("Requested params")
     console.log(params);
     
-    const folderName = params.Language + 'X' + params.Technology;
+    const folderName = params.Language + '/' + params.Technology;
     var projectDirPath = path.resolve(__dirname + './../public/');
 
     const folderSourcePath = path.join(projectDirPath, folderName)
