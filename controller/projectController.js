@@ -18,8 +18,8 @@ exports.create = function (request, response, next) {
                 return err;
             }
             const packageJsonFilePath = path.join(destinationFolderPath, 'package.json')
-            saveToPackage(packageJsonFilePath,params);
-            return createZip(destinationFolderPath,response);
+            saveToPackage(packageJsonFilePath, params);
+            return createZip(destinationFolderPath, response);
         });
 
 
@@ -39,7 +39,7 @@ function saveToPackage(packageJsonFilePath, params) {
     let json;
 
     try {
-        console.log("data **************",data);
+        console.log("data **************", data);
         json = JSON.parse(data);
         console.log(json);
     } catch (e) {
@@ -54,7 +54,7 @@ function saveToPackage(packageJsonFilePath, params) {
     }, {});
 
     json['dependencies'] = modifiedJsonData;
-    json = Object.assign(json,params.metaDataItems);
+    json = Object.assign(json, params.metaDataItems);
     writeToFile(packageJsonFilePath, JSON.stringify(json, null, 2));
     console.log('Done.');
 }
@@ -86,7 +86,7 @@ const getSourceFolderPath = (params) => {
 
     console.log("Requested params")
     console.log(params);
-    
+
     const folderName = params.Language + '/' + params.Technology;
     var projectDirPath = path.resolve(__dirname + './../public/');
 
@@ -111,24 +111,24 @@ const copyFolder = (source, destination, callback) => {
         console.log('done!');
         callback(err);
     });
-    
+
 }
 
-const createZip = (folderPath,response) => {
-    console.log("create zip folder path",folderPath);
-        return response.zip({
-            files: [{
-                content: 'this is a string',
-                name: 'file-name',
-                mode: 0755,
-                comment: 'comment-for-the-file',
-                date: new Date(),
-                type: 'file'
-            },
-            { path: folderPath, name: "foldername" }
-            ],
-            filename: "foldername" + '.zip'
-        });
+const createZip = (folderPath, response) => {
+    console.log("create zip folder path", folderPath);
+    return response.zip({
+        files: [{
+            content: 'this is a string',
+            name: 'file-name',
+            mode: 0755,
+            comment: 'comment-for-the-file',
+            date: new Date(),
+            type: 'file'
+        },
+        { path: folderPath, name: "foldername" }
+        ],
+        filename: "foldername" + '.zip'
+    });
 }
 
 
